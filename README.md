@@ -13,5 +13,13 @@ self.set_output_conf()
 check the set_output_conf() function to send the hex command for setting up to output configuration, you could compose this message at:
 MT Manager - Device Data View - GoToConfig - SetOuputConfiguration, and click edit, to add the messages needed.
 
+
+run the code in the CMD in Windows like this:
+```
+python raw_xsens_comms.py
+```
+
+
+
 This code has been checked with MTi-680 in Windows 11, not all other models.
 
