@@ -6,8 +6,8 @@ self.serial_port = 'COM4'
 self.baudrate = 115200
 
 #### if you want to configure the sensor, un-comment this line below####
-# self.go_to_config_mode()
-# self.set_output_conf()
+self.go_to_config_mode()
+self.set_output_conf()
 #### end comments ####
 
 check the set_output_conf() function to send the hex command for setting up to output configuration, you could compose this message at:
