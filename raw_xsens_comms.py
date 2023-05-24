@@ -9,8 +9,8 @@ logging.basicConfig(level=logging.INFO,
 
 class ImuReader:
     def __init__(self):
-        self.serial_port = 'COM4'
-        self.baudrate = 115200
+        self.serial_port = 'COM4' # for ubuntu , change to '/dev/ttyUSB0'
+        self.baudrate = 115200 # this is default value, change to your sensor's baudrate.
         self.send_queue = queue.Queue()
         #### if you want to configure the sensor, un-comment this line below####
         # self.go_to_config_mode()
