@@ -7,7 +7,7 @@ Windows:
 pip install pyserial
 ```
 
-Linux
+ubuntu
 ```
 sudo pip3 install pyserial
 ```
@@ -17,7 +17,7 @@ sudo apt-get update
 sudo apt-get -y install python3-serial
 ```
 
-You need to change the COM and baudrate to your own sensor's COM name and baudrate(default is 115200, but could be configured in MT Manager - Device Settings)
+You need to change the COM and baudrate to your own sensor's COM name and baudrate(default is 115200, but could be configured in MT Manager - Device Settings) in raw_xsens_comms.py:
 ```
 self.serial_port = 'COM4' #for ubuntu, change to '/dev/ttyUSB0'
 self.baudrate = 115200
