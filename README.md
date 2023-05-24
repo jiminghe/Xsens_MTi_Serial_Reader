@@ -1,6 +1,22 @@
 # Xsens_MTi_Serial_Reader
 Use Python Serial library to config/read data from Xsens MTi
 
+Install the dependency libary
+Windows:
+```
+pip install pyserial
+```
+
+Linux
+```
+sudo pip3 install pyserial
+```
+or
+```
+sudo apt-get update
+sudo apt-get -y install python3-serial
+```
+
 You need to change the COM and baudrate to your own sensor's COM name and baudrate(default is 115200, but could be configured in MT Manager - Device Settings)
 ```
 self.serial_port = 'COM4' #for ubuntu, change to '/dev/ttyUSB0'
@@ -20,6 +36,10 @@ MT Manager - Device Data View - GoToConfig - SetOuputConfiguration, and click ed
 run the code in the CMD in Windows like this:
 ```
 python raw_xsens_comms.py
+```
+for ubuntu:
+```
+python3 raw_xsens_comms.py
 ```
 
 
