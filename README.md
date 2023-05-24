@@ -3,7 +3,7 @@ Use Python Serial library to config/read data from Xsens MTi
 
 You need to change the COM and baudrate to your own sensor's COM name and baudrate(default is 115200, but could be configured in MT Manager - Device Settings)
 ```
-self.serial_port = 'COM4'
+self.serial_port = 'COM4' #for ubuntu, change to '/dev/ttyUSB0'
 self.baudrate = 115200
 ```
 
@@ -24,5 +24,13 @@ python raw_xsens_comms.py
 
 
 
-This code has been checked with MTi-680 in Windows 11, not all other models.
+This code has been checked with MTi-680 in Windows 11, and MTi-300 in ubuntu 18.04LTS(nVidia Jetson Nano),  not all other MTi models were tested, by they share the same Xbus communication protocol.
 
+For MTi-300 with cable model CA-USB-MTi, if you don't have 'dev/ttyUSB0', 
+```
+git clone https://github.com/xsens/xsens_mt.git
+cd ~/xsens_mt
+make HAVE_LIBUSB=1
+sudo modprobe usbserial
+sudo insmod ./xsens_mt.ko
+```
