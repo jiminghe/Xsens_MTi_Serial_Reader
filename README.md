@@ -19,14 +19,13 @@ sudo apt-get -y install python3-serial
 
 You need to change the COM and baudrate to your own sensor's COM name and baudrate(default is 115200, but could be configured in MT Manager - Device Settings) in raw_xsens_comms.py:
 ```
-self.serial_port = 'COM4' #for ubuntu, change to '/dev/ttyUSB0'
-self.baudrate = 115200
+serial = SerialHandler("COM12", 921600) #for ubuntu, change to '/dev/ttyUSB0' #baudrate default is 115200, unless changed in MT Manager
 ```
 
 #### if you want to configure the sensor, un-comment this line below:
 ```
-self.go_to_config_mode()
-self.set_output_conf()
+serial.send_with_checksum(go_to_config)
+set_output_conf(serial)
 ```
 
 check the set_output_conf() function to send the hex command for setting up to output configuration, you could compose this message at:
@@ -35,11 +34,11 @@ MT Manager - Device Data View - GoToConfig - SetOuputConfiguration, and click ed
 
 run the code in the CMD in Windows like this:
 ```
-python raw_xsens_comms.py
+python main.py
 ```
 for ubuntu:
 ```
-python3 raw_xsens_comms.py
+python3 main.py
 ```
 
 
