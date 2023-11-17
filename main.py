@@ -47,14 +47,15 @@ def on_live_data_available(packet):
 
 def main():
     try:
-        serial = SerialHandler("COM12", 921600)
+        serial = SerialHandler("COM12", 115200) ##change the port and baudrate to your own MTi's baudrate.
         packet = XbusPacket(on_data_available=on_live_data_available)
 
         go_to_config = bytes.fromhex('FA FF 30 00')
         go_to_measurement = bytes.fromhex('FA FF 10 00')
-        serial.send_with_checksum(go_to_config)
-        set_output_conf(serial)
-        time.sleep(0.1)  # Sleep for 0.1 sec
+        ###if you want to configure your sensor's output, check the set_output_conf function.
+        ##serial.send_with_checksum(go_to_config)
+        ##set_output_conf(serial)
+        ##time.sleep(0.1)  # Sleep for 0.1 sec
         serial.send_with_checksum(go_to_measurement)
 
         print("Listening for packets...")
