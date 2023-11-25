@@ -20,27 +20,31 @@ def set_output_conf(serial):
     D0 12 01 90 VelocityXYZ Fp1632 at 400Hz
     98 Checksum (calculated by the send_with_checksum )
 
-    example2. configure for MTi-680(GNSS/INS) same as above example but with euler angle output instead
+    example2. configure for MTi-680(GNSS/INS) same as above example but with euler angle output instead(no checksum)
     FA FF C0 30 10 20 FF FF 10 60 FF FF 10 10 FF FE 20 30 01 90 40 20 01 90 40 30 01 90 80 20 01 90 C0 20 00 64 E0 20 FF FF 50 42 01 90 50 22 01 90 D0 12 01 90
 
+    example3. configure for MTi-680 or MTi-8(GNSS/INS) same as above example1 but with euler angle output, and all at 100Hz (no checksum)
+    FA FF C0 30 10 20 FF FF 10 60 FF FF 10 10 FF FE 20 30 00 64 40 20 00 64 40 30 00 64 80 20 00 64 C0 20 00 64 E0 20 FF FF 50 42 00 64 50 22 FF FF D0 12 00 64
 
-    example3 configuration for MTi-630(AHRS), 400Hz, packetCounter + sampleTimeFine + Quaternion + Acc + FreeAcc + RateOfTurn + MagneticField + StatusWord
+
+    example4 configuration for MTi-630(AHRS), 400Hz, packetCounter + sampleTimeFine + Quaternion + Acc + FreeAcc + RateOfTurn + MagneticField + StatusWord
     FA FF C0 20 10 20 FF FF 10 60 FF FF 20 10 01 90 40 20 01 90 40 30 01 90 80 20 01 90 C0 20 00 64 E0 20 FF FF
 
-    example4 configuration for MTi-630(AHRS), 400Hz, packetCounter + sampleTimeFine + EulerAngle + Acc + FreeAcc + RateOfTurn + MagneticField + StatusWord
+    example5 configuration for MTi-630(AHRS), 400Hz, packetCounter + sampleTimeFine + EulerAngle + Acc + FreeAcc + RateOfTurn + MagneticField + StatusWord
     FA FF C0 20 10 20 FF FF 10 60 FF FF 20 30 01 90 40 20 01 90 40 30 01 90 80 20 01 90 C0 20 00 64 E0 20 FF FF
 
-    example5 configuration for MTi-630 or MTi-3(AHRS), 100Hz, packetCounter + sampleTimeFine + EulerAngle + Acc + FreeAcc + RateOfTurn + MagneticField + StatusWord
+    example6 configuration for MTi-630 or MTi-3(AHRS), 100Hz, packetCounter + sampleTimeFine + EulerAngle + Acc + FreeAcc + RateOfTurn + MagneticField + StatusWord
     FA FF C0 20 10 20 FF FF 10 60 FF FF 20 30 00 64 40 20 00 64 40 30 00 64 80 20 00 64 C0 20 00 64 E0 20 FF FF
 
-    example6 configuration for MTi-630 or MTi-3(AHRS), 100Hz, packetCounter + sampleTimeFine + Quaternion + Acc + FreeAcc + RateOfTurn + MagneticField + StatusWord
+    example7 configuration for MTi-630 or MTi-3(AHRS), 100Hz, packetCounter + sampleTimeFine + Quaternion + Acc + FreeAcc + RateOfTurn + MagneticField + StatusWord
     FA FF C0 20 10 20 FF FF 10 60 FF FF 20 10 00 64 40 20 00 64 40 30 00 64 80 20 00 64 C0 20 00 64 E0 20 FF FF
     """
     option1_gnssins_quat_400hz = 'FA FF C0 30 10 20 FF FF 10 60 FF FF 10 10 FF FE 20 30 01 90 40 20 01 90 40 30 01 90 80 20 01 90 C0 20 00 64 E0 20 FF FF 50 42 01 90 50 22 01 90 D0 12 01 90'
     option2_gnssins_euler_400hz = 'FA FF C0 30 10 20 FF FF 10 60 FF FF 10 10 FF FE 20 30 01 90 40 20 01 90 40 30 01 90 80 20 01 90 C0 20 00 64 E0 20 FF FF 50 42 01 90 50 22 01 90 D0 12 01 90'
-    option3_ahrs_quat_400hz = 'FA FF C0 20 10 20 FF FF 10 60 FF FF 20 10 01 90 40 20 01 90 40 30 01 90 80 20 01 90 C0 20 00 64 E0 20 FF FF'
-    option4_ahrs_euler_400hz = 'FA FF C0 20 10 20 FF FF 10 60 FF FF 20 30 01 90 40 20 01 90 40 30 01 90 80 20 01 90 C0 20 00 64 E0 20 FF FF'
-    option5_ahrs_euler_100hz = 'FA FF C0 20 10 20 FF FF 10 60 FF FF 20 30 00 64 40 20 00 64 40 30 00 64 80 20 00 64 C0 20 00 64 E0 20 FF FF'
-    option6_ahrs_quat_100hz = 'FA FF C0 20 10 20 FF FF 10 60 FF FF 20 10 00 64 40 20 00 64 40 30 00 64 80 20 00 64 C0 20 00 64 E0 20 FF FF'
+    option3_gnssins_euler_100hz = 'FA FF C0 30 10 20 FF FF 10 60 FF FF 10 10 FF FE 20 30 00 64 40 20 00 64 40 30 00 64 80 20 00 64 C0 20 00 64 E0 20 FF FF 50 42 00 64 50 22 FF FF D0 12 00 64'
+    option4_ahrs_quat_400hz = 'FA FF C0 20 10 20 FF FF 10 60 FF FF 20 10 01 90 40 20 01 90 40 30 01 90 80 20 01 90 C0 20 00 64 E0 20 FF FF'
+    option5_ahrs_euler_400hz = 'FA FF C0 20 10 20 FF FF 10 60 FF FF 20 30 01 90 40 20 01 90 40 30 01 90 80 20 01 90 C0 20 00 64 E0 20 FF FF'
+    option6_ahrs_euler_100hz = 'FA FF C0 20 10 20 FF FF 10 60 FF FF 20 30 00 64 40 20 00 64 40 30 00 64 80 20 00 64 C0 20 00 64 E0 20 FF FF'
+    option7_ahrs_quat_100hz = 'FA FF C0 20 10 20 FF FF 10 60 FF FF 20 10 00 64 40 20 00 64 40 30 00 64 80 20 00 64 C0 20 00 64 E0 20 FF FF'
 
-    serial.send_with_checksum(bytes.fromhex(option6_ahrs_quat_100hz))
+    serial.send_with_checksum(bytes.fromhex(option3_gnssins_euler_100hz))
