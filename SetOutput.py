@@ -42,9 +42,11 @@ def set_output_conf(serial):
     option1_gnssins_quat_400hz = 'FA FF C0 30 10 20 FF FF 10 60 FF FF 10 10 FF FE 20 30 01 90 40 20 01 90 40 30 01 90 80 20 01 90 C0 20 00 64 E0 20 FF FF 50 42 01 90 50 22 01 90 D0 12 01 90'
     option2_gnssins_euler_400hz = 'FA FF C0 30 10 20 FF FF 10 60 FF FF 10 10 FF FE 20 30 01 90 40 20 01 90 40 30 01 90 80 20 01 90 C0 20 00 64 E0 20 FF FF 50 42 01 90 50 22 01 90 D0 12 01 90'
     option3_gnssins_euler_100hz = 'FA FF C0 30 10 20 FF FF 10 60 FF FF 10 10 FF FE 20 30 00 64 40 20 00 64 40 30 00 64 80 20 00 64 C0 20 00 64 E0 20 FF FF 50 42 00 64 50 22 FF FF D0 12 00 64'
-    option4_ahrs_quat_400hz = 'FA FF C0 20 10 20 FF FF 10 60 FF FF 20 10 01 90 40 20 01 90 40 30 01 90 80 20 01 90 C0 20 00 64 E0 20 FF FF'
-    option5_ahrs_euler_400hz = 'FA FF C0 20 10 20 FF FF 10 60 FF FF 20 30 01 90 40 20 01 90 40 30 01 90 80 20 01 90 C0 20 00 64 E0 20 FF FF'
-    option6_ahrs_euler_100hz = 'FA FF C0 20 10 20 FF FF 10 60 FF FF 20 30 00 64 40 20 00 64 40 30 00 64 80 20 00 64 C0 20 00 64 E0 20 FF FF'
-    option7_ahrs_quat_100hz = 'FA FF C0 20 10 20 FF FF 10 60 FF FF 20 10 00 64 40 20 00 64 40 30 00 64 80 20 00 64 C0 20 00 64 E0 20 FF FF'
+    option4_gnssins_euler_pvt_100hz = 'FA FF C0 34 10 20 FF FF 10 60 FF FF 10 10 FF FE 20 30 00 64 40 20 00 64 40 30 00 64 80 20 00 64 C0 20 00 64 E0 20 FF FF 50 42 00 64 50 22 FF FF D0 12 00 64 70 10 FF FF '
+    option5_ahrs_quat_400hz = 'FA FF C0 20 10 20 FF FF 10 60 FF FF 20 10 01 90 40 20 01 90 40 30 01 90 80 20 01 90 C0 20 00 64 E0 20 FF FF'
+    option6_ahrs_euler_400hz = 'FA FF C0 20 10 20 FF FF 10 60 FF FF 20 30 01 90 40 20 01 90 40 30 01 90 80 20 01 90 C0 20 00 64 E0 20 FF FF'
+    option7_ahrs_euler_100hz = 'FA FF C0 20 10 20 FF FF 10 60 FF FF 20 30 00 64 40 20 00 64 40 30 00 64 80 20 00 64 C0 20 00 64 E0 20 FF FF'
+    option8_ahrs_quat_100hz = 'FA FF C0 20 10 20 FF FF 10 60 FF FF 20 10 00 64 40 20 00 64 40 30 00 64 80 20 00 64 C0 20 00 64 E0 20 FF FF'
 
-    serial.send_with_checksum(bytes.fromhex(option3_gnssins_euler_100hz))
+    serial.send_with_checksum(bytes.fromhex(option4_gnssins_euler_pvt_100hz))
+
