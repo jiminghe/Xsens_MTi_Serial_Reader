@@ -77,8 +77,8 @@ class XbusPacket:
         pass
 
     def compute_checksum(self, packet):
-        # Calculate the checksum by summing all bytes except for the first one and taking the lower byte
-        return sum(packet[1:]) & 0xFF
+        # negative summation of all bytes in the message, excluding the first byte(premable) and taking the lower byte
+        return (-sum(result[1:])) & 0xFF
 
     def validate_checksum(self):
         if not self.is_packet_complete():
