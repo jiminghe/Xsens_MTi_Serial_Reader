@@ -62,7 +62,7 @@ def on_live_data_available(packet, filename):
 
 def main():
     try:
-        serial = SerialHandler("COM21", 2000000) ##change the port and baudrate to your own MTi's baudrate.
+        serial = SerialHandler("COM21", 921600) ##change the port and baudrate to your own MTi's baudrate.
 
         go_to_config = bytes.fromhex('FA FF 30 00')
         go_to_measurement = bytes.fromhex('FA FF 10 00')
@@ -72,10 +72,11 @@ def main():
         ##set_output_conf(serial)
         # time.sleep(0.1)  # Sleep for 0.1 sec
         
+        packet = XbusPacket(on_data_available=lambda p: on_live_data_available(p, filename))
+        
         # Generate a timestamp-based filename
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         filename = f'{timestamp}.csv'
-        packet = XbusPacket(on_data_available=lambda p: on_live_data_available(p, filename))
         
         serial.send_with_checksum(go_to_measurement)
         print("Listening for packets...")
