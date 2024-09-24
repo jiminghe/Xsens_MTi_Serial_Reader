@@ -70,7 +70,7 @@ def main():
         serial.send_with_checksum(go_to_config)
         ###if you want to configure your sensor's output, check the set_output_conf function.
         ##set_output_conf(serial)
-        # time.sleep(0.1)  # Sleep for 0.1 sec
+        time.sleep(0.1)  # Sleep for 0.1 sec
         
         packet = XbusPacket(on_data_available=lambda p: on_live_data_available(p, filename))
         
