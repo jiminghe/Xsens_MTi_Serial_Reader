@@ -75,18 +75,3 @@ class XbusPacket:
             print("Checksum failed. Buffer:", " ".join(f"{b.hex().upper()}" for b in self.buffer))
             print("Checksum:", f"{checksum:02X}")
             return False
-            
-            
-            
-# Usage example (you would need to implement on_data_available):
-# def handle_packet(packet):
-#     print("Received packet:", packet)
-
-# xbus = XbusPacket(on_data_available=handle_packet)
-# xbus.feed_byte(b'\xfa')
-# xbus.feed_byte(b'\xff')
-# xbus.feed_byte(b'\x36')
-# xbus.feed_byte(b'\x03')  # Length of data
-# xbus.feed_byte(b'\x01')  # Data byte 1
-# xbus.feed_byte(b'\x02')  # Data byte 2
-# xbus.feed_byte(b'\x03')  # Checksum (for example, correct value)
