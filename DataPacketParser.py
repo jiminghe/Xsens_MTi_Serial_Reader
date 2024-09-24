@@ -20,8 +20,8 @@ class XsDataPacket:
         self.acc = [0.0, 0.0, 0.0]
         self.accAvailable = False
 
-        self.freeacc = [0.0, 0.0, 0.0]
-        self.freeaccAvailable = False
+        self.freeAcc = [0.0, 0.0, 0.0]
+        self.freeAccAvailable = False
 
         self.rot = [0.0, 0.0, 0.0]
         self.rotAvailable = False
@@ -50,6 +50,18 @@ class XsDataPacket:
 
         self.statusWord = 0
         self.statusWordAvailable = False
+        
+        self.temperature = 0.0
+        self.temperatureAvailable = False
+        
+        self.baropressure = 0
+        self.baropressureAvailable = False
+        
+        self.deltaV = [0.0, 0.0, 0.0]
+        self.deltaVAvailable = False
+        
+        self.deltaQ = [0.0, 0.0, 0.0, 0.0]
+        self.deltaQAvailable = False
 
     @staticmethod
     def asin_clamped(x):
@@ -78,22 +90,46 @@ class XsDataPacket:
 class DataPacketParser:
     @staticmethod
     def parse_data_packet(packet, xbus_data):
-        # Set initial offset to skip the packet header
-        # packet_bytes = b''.join(packet)
-        data_part = b''.join(packet[4:-1])
+        # Ensure packet is a list of bytes
+        if not isinstance(packet, list) or not all(isinstance(b, bytes) for b in packet):
+            raise ValueError("Packet must be a list of bytes.")
+
+        # Ensure the packet has enough data to skip header
+        if len(packet) < 5:
+            print("Error: Packet too short.")
+            return
+
+        # Join bytes from the packet, skipping the first 4 bytes (header) and the last byte (checksum)
+        data_part = b''.join(packet[4:-1])  
         bytes_offset = 0
 
         while bytes_offset < len(data_part):
-            #2bytes used for data id
-            data_id = data_part[bytes_offset + 0: bytes_offset + 2]
-            #1byte used for data len
+            # Ensure there's enough data to read data_id and data_len
+            if bytes_offset + 3 > len(data_part):
+                print("Not enough data to read data_id and data_len.")
+                break
+            
+            # 2 bytes used for data id
+            data_id = data_part[bytes_offset:bytes_offset + 2]
+            # 1 byte used for data len
             data_len = int.from_bytes(data_part[bytes_offset + 2:bytes_offset + 3], 'big')
 
-            packet_data =  data_part[bytes_offset + 3: bytes_offset + 3 + data_len]
+            # Ensure there is enough data for packet_data
+            if bytes_offset + 3 + data_len > len(data_part):
+                print("Not enough data for packet_data.")
+                break
 
+            packet_data = data_part[bytes_offset + 3:bytes_offset + 3 + data_len]
+
+            # Debug: Print details about the current data being parsed
+            # print(f"Data ID: {data_id.hex().upper()}, Data Length: {data_len}, Packet Data: {packet_data.hex().upper()}")
+
+            # Call the parsing function
             DataPacketParser.parse_mtdata2(xbus_data, data_id, packet_data)
 
-            bytes_offset += data_len + 3 # 2bytes used for data id and 1 byte for size field
+            # Move offset for the next data segment
+            bytes_offset += data_len + 3  # 2 bytes for data_id and 1 byte for size field
+
 
     @staticmethod
     def get_data_fp1632(message, offset):
@@ -155,10 +191,10 @@ class DataPacketParser:
         
         elif data_id == bytes.fromhex('4030'):
             #calibrated acceleration
-            xsdata.freeacc[0] = unpack('>f', packet_data[:4])[0]
-            xsdata.freeacc[1] = unpack('>f', packet_data[4:8])[0]
-            xsdata.freeacc[2] = unpack('>f', packet_data[8:])[0]
-            xsdata.freeaccAvailable = True
+            xsdata.freeAcc[0] = unpack('>f', packet_data[:4])[0]
+            xsdata.freeAcc[1] = unpack('>f', packet_data[4:8])[0]
+            xsdata.freeAcc[2] = unpack('>f', packet_data[8:])[0]
+            xsdata.freeAccAvailable = True
         
         elif data_id == bytes.fromhex('8020'):
             #RateOfTurn, rad/sec
@@ -193,6 +229,27 @@ class DataPacketParser:
             xsdata.vel[1] = DataPacketParser.get_data_fp1632(packet_data, 6)
             xsdata.vel[2] = DataPacketParser.get_data_fp1632(packet_data, 12)
             xsdata.velocityAvailable = True
+        
+        elif data_id == bytes.fromhex('0810'):
+            xsdata.temperature = unpack('>f', packet_data[:4])[0]
+            xsdata.temperatureAvailable = True
+        
+        elif data_id == bytes.fromhex('3010'):
+            xsdata.baropressure = unpack('>I', packet_data)[0]
+            xsdata.baropressureAvailable = True
+            
+        elif data_id == bytes.fromhex('4010'):
+            xsdata.deltaV[0] = unpack('>f', packet_data[:4])[0]
+            xsdata.deltaV[1] = unpack('>f', packet_data[4:8])[0]
+            xsdata.deltaV[2] = unpack('>f', packet_data[8:])[0]
+            xsdata.deltaVAvailable = True
+        
+        elif data_id == bytes.fromhex('8030'):
+            xsdata.deltaQ[0] = unpack('>f', packet_data[:4])[0]
+            xsdata.deltaQ[1] = unpack('>f', packet_data[4:8])[0]
+            xsdata.deltaQ[2] = unpack('>f', packet_data[8:12])[0]
+            xsdata.deltaQ[3] = unpack('>f', packet_data[12:])[0]
+            xsdata.deltaQAvailable = True
 
         else:
             print(f"Unparsed Device ID: {', '.join(f'0x{byte:02X}' for byte in data_id)}\n")

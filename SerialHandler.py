@@ -11,10 +11,15 @@ class SerialHandler:
             self.serial_port.close()
 
     def read_byte(self):
-        byte = self.serial_port.read(1)
-        if not byte:
-            raise RuntimeError("Failed to read from the serial port.")
-        return byte
+        try:
+            byte = self.serial_port.read(1)
+            if not byte:
+                raise RuntimeError("Failed to read from the serial port.")
+            return byte
+        except serial.SerialTimeoutException:
+            print("Read timeout occurred.")
+        except Exception as e:
+            print(f"Error reading byte: {e}")
 
     def send_bytes(self, bytes_data):
         # Debugging: Print the bytes in hex format
